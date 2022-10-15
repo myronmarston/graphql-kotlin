@@ -41,7 +41,14 @@ class InputQuery(
         val nullableListNullableElements: List<String?>? = null,
         val nullableListNonNullableElements: List<String>? = null,
         val nullableElementList: List<String?>,
-        val nonNullableElementList: List<String>
+        val nonNullableElementList: List<String>,
+        val isPrefixedBooleanField: Boolean? = null,
+        val isPrefixedNonBooleanField: BooleanFilter? = null
+    )
+
+    @Serializable
+    data class BooleanFilter(
+        val equalTo: Boolean
     )
 
     @Serializable

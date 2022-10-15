@@ -342,4 +342,36 @@ class GraphQLClientJacksonSerializerTest {
         val serialized = serializer.serialize(entitiesQuery)
         assertEquals(expected, serialized)
     }
+
+    @Test
+    fun `verify we can serialize is-prefixed variable fields`() {
+        val query = InputQuery(
+            variables = InputQuery.Variables(
+                // these 3 fields are required.
+                requiredInput = 1, nullableElementList = emptyList(), nonNullableElementList = emptyList(),
+                // test an is-prefixed field with a boolean value
+                isPrefixedBooleanField = true,
+                // test an is-prefixed field with a non-boolean value
+                isPrefixedNonBooleanField = InputQuery.BooleanFilter(equalTo = false)
+            )
+        )
+
+        val expected = """{
+            |  "variables" : {
+            |    "requiredInput" : 1,
+            |    "nullableElementList" : [ ],
+            |    "nonNullableElementList" : [ ],
+            |    "isPrefixedBooleanField" : true,
+            |    "isPrefixedNonBooleanField" : {
+            |      "equalTo" : false
+            |    }
+            |  },
+            |  "query" : "INPUT_QUERY",
+            |  "operationName" : "InputQuery"
+            |}
+        """.trimMargin()
+
+        val serialized = serializer.serialize(query)
+        assertEquals(expected, serialized)
+    }
 }
