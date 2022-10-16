@@ -17,6 +17,7 @@
 package com.expediagroup.graphql.client.jackson.data
 
 import com.expediagroup.graphql.client.types.GraphQLClientRequest
+import com.fasterxml.jackson.annotation.JsonProperty
 import kotlin.String
 import kotlin.collections.List
 import kotlin.reflect.KClass
@@ -38,6 +39,7 @@ class InputQuery(
         val nullableElementList: List<String?>,
         val nonNullableElementList: List<String>,
         val isPrefixedBooleanField: Boolean? = null,
+        @JsonProperty("isPrefixedNonBooleanField")
         val isPrefixedNonBooleanField: BooleanFilter? = null
     )
 
